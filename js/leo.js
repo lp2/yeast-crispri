@@ -34,7 +34,7 @@ var processingComplete = function(){
       if(!tables_styled){
         search_bar = $('.dynatable-search input');
         search_bar.addClass("form-control search-table");
-        search_bar.attr("placeholder", "Search table...");
+        search_bar.attr("placeholder", "Type to search table...");
         search_bar.parent().contents().filter(function(){ return this.nodeType != 1; }).remove();
 
 
@@ -97,6 +97,7 @@ makeRowObject = function(i){
 
   return {"Chrm" : "chr"+df.Chrm[i], 
        "PAM_mid": df.PAM_mid[i],
+       "PAM_mid_pretty": df.PAM_mid[i].toLocaleString(),
        "Seq" :df.Seq[i], 
        "Length": df.Seq[i].length,
        "ORF": orf,
@@ -210,15 +211,14 @@ updateDynatable = function(records){
     obj.expand_arrow = '<i class="arrow fa fa-angle-right"></i>'
 
     score = 0
-    if(obj['1C'] == 1 & obj['9C'] == 1) score += 1
     if(Math.abs(obj['Midpoint_TSS_dist'])  <= 200 ) score += 1
     if(obj['Nucleosome'] <= 0.2) score += 1
 
     obj.score = score
 
     score_viz = ""
-    for(var j=0; j < 3; j++){
-      if( j < score){
+    for(var j=0; j < 2; j++){
+      if(j < score){
          score_viz += '<div class="bx bx-green"></div>'
        }else{
          score_viz += '<div class="bx bx-red"></div>'
@@ -404,6 +404,7 @@ GAAAAGGTAAAAAGTAAAAA");
           delete data[i]['Gene_name_url']
           delete data[i]['expand_arrow']
           delete data[i]['score_viz']
+          delete data[i]['PAM_mid_pretty']
         }
         console.log(data);
 

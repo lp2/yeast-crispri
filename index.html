@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>gRNA design | Search</title>
+<title>Yeast CRISPRi | Search</title>
 
 <script src="./js/jquery.min.js"></script>
 <link href="./css/cosmo.min.css" rel="stylesheet">
@@ -22,6 +22,7 @@
 
 <script src="./data/name2orf.json"></script>
 <script src="./data/orf2name.json"></script>
+<script src="./data/orf2tss.json"></script>
 
 <!-- Styles for this site -->
 <link href="./css/styles.css" rel="stylesheet">
@@ -67,9 +68,11 @@
 
 <div class="header">
   <nav class="navbar">
-      <h3 class="navbar-left"><strong>gRNA</strong> design</h3>
+      <h3 class="navbar-left hand" onclick="$('#nav-about a').click()">
+        <strong>Yeast</strong> CRISPRi
+        <!-- <img style="width: 200px" src="images/logo.svg" alt="Yeast CRISPRi Home"/> -->
+      </h3>
       <ul class="nav nav-pills navbar-right">
-        <li role="presentation" id="nav-home" data-id="home-page"><a class="hand"><i class="fa fa-home hide"></i> Home</a></li>
         <li role="presentation" id="nav-search" class="active" data-id="search-page"><a class="hand"><i class="fa fa-search hide"></i> Search</a></li>
         <li role="presentation" id="nav-about" data-id="about-page"><a class="hand"><i class="fa fa-info-circle hide"></i> About</a></li>
         <li role="presentation" id="nav-help" data-id="help-page"><a class="hand"><i class="fa fa-question-circle hide"></i> Help</a></li>
@@ -82,31 +85,36 @@
 <!--/html_preserve-->
 
 
-<!--START HOME PAGE-->
-<div id="home-page" style="display:none">
-  <div class="row">
-    <div class="col-lg-12">
-      <h2>My home page</h2>
-      <hr>
-      <p>Some home page text</p>
-    </div>
-  </div>
-</div><!--END HOME PAGE-->
-
 <!--START ABOUT PAGE-->
 <div id="about-page" style="display:none">
   <div class="row">
     <div class="col-lg-12">
-      <h2>About me</h2>
+      <h2>Yeast CRISPRi guide selection and evaluation</h2>
       <hr>
-      <h3>Brief description</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et nunc vel mauris vestibulum vestibulum. Ut tincidunt fermentum dignissim. Mauris sodales arcu</p>
+      <p>This site helps to select effective guide RNAs for dCas9-mediated transcriptional repression, and evaluate existing designs for efficacy. The estimates are based on the work of Smith et al. (2015, submitted), that derived several yeast-specific guide RNA design rules for CRISPRi, and publically available nucleosome occupancy, ATAC-seq, and transcription start site data.</p>
 
       <h3>Citation</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et nunc vel mauris vestibulum vestibulum. Ut tincidunt fermentum dignissim. Mauris sodales arcu</p>
-
+      If you use the yeast CRISPRi resource in your work, please cite the following:
+      <p>Smith et al. (2015, submitted) Quantitative CRISPR interference screens in yeast identify chemical-genetic interactions and new rules for guide RNA design.</p>
+      
       <h3>Contact information</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et nunc vel mauris vestibulum vestibulum. Ut tincidunt fermentum dignissim. Mauris sodales arcu</p>
+      <p>For questions or comments, please get in touch with one of us</p>
+      <dl class="dl-horizontal">
+
+        <dt>Justin Smith</dt>
+        <dd><a href="http://www.google.com/recaptcha/mailhide/d?k=01OOxvylBECEcbhnEXT2FeFg==&amp;c=kC10m0pkCBKDnmNLPQe0TF84j7cu6fA5jKdBhYlNMkU=" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\07501OOxvylBECEcbhnEXT2FeFg\75\75\46c\75kC10m0pkCBKDnmNLPQe0TF84j7cu6fA5jKdBhYlNMkU\075', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" title="Reveal this e-mail address">j...</a>@gmail.com</dd>
+
+        <dt>Omar Wagih</dt>
+        <dd><a href="http://www.google.com/recaptcha/mailhide/d?k=016S5i6CBkBjmH6P2b3aewUQ==&amp;c=VoSkrjvAKI4hqNEKA6QFTQ==" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\075016S5i6CBkBjmH6P2b3aewUQ\75\75\46c\75VoSkrjvAKI4hqNEKA6QFTQ\75\075', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" title="Reveal this e-mail address">w...</a>@ebi.ac.uk</dd>
+
+        <dt>Leopold Parts</dt>
+        <dd><a href="http://www.google.com/recaptcha/mailhide/d?k=01OOxvylBECEcbhnEXT2FeFg==&amp;c=iFBnMhsYrALdwhsEMJqvzx5Xz-8yJMJKV-9-v0jqqY8=" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\07501OOxvylBECEcbhnEXT2FeFg\75\75\46c\75iFBnMhsYrALdwhsEMJqvzx5Xz-8yJMJKV-9-v0jqqY8\075', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" title="Reveal this e-mail address">l...</a>@sanger.ac.uk</dd>
+
+        <dt>Robet P. St. Onge</dt>
+        <dd><a href="http://www.google.com/recaptcha/mailhide/d?k=01V3fPybU16OiWkGbvrwoc2Q==&amp;c=qaICZkAn6LMgWUX1DEEjkhDtq7NIWwNPej6EyOQuQZk=" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\07501V3fPybU16OiWkGbvrwoc2Q\75\75\46c\75qaICZkAn6LMgWUX1DEEjkhDtq7NIWwNPej6EyOQuQZk\075', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" title="Reveal this e-mail address">b...</a>@stanford.edu</dd>
+
+      </dl>
+      
     </div>
   </div>
 </div><!--END ABOUT PAGE-->
@@ -119,11 +127,19 @@
       <hr>
 
       <h3>Description of features</h3>
-      <ul>
-        <li>Description 1 goes here</li>
-        <li>Description 2 goes here</li>
-        <li>Description 3 goes here</li>
-      </ul>
+
+      <dl class="dl-horizontal">
+        <dt>Nucleosome</dt>
+        <dd>Posterior probability of nucleosome occupancy as defined in Schep et al. (2015) Genome Research</dd>
+
+        <dt>ATAC-seq</dt>
+        <dd>Read count from Schep et al. ATAC-seq experiment, averaged in a sliding window of 50bp, and normalised to the largest value in a 1000bp window. This features encodes how open the chromatin is relative to the rest of the region.</dd>
+
+        <dt>PAM+1-C, PAM+9-C</dt>
+        <dd>1 if the targeted sequence has a "C" at position 1 or 9, 0 otherwise. Smith et al. (2015) observed a lower median guide efficacy for guides with a C in this position. While statistically significant, this effect was not validated by independent experiments, so these features are given as secondary suggestions.</dd>
+
+      </dl>
+
     </div>
   </div>
 </div><!--END ABOUT PAGE-->
@@ -132,7 +148,7 @@
 <div id="search-page">
 
 <div class="hide" id="expand-template">
-  <div class="row" style="margin-left: -2px !important">
+  <div class="row">
   <div class="col-lg-4">
     <ul class="list-group">
       <li class="list-group-item">
@@ -150,6 +166,19 @@
     </ul>
   </div>
 
+  <div class="col-lg-4">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <span class="badge" id="pam-19">&ndash;</span>
+        PAM +1/+9 C
+      </li>
+      <li class="list-group-item">
+        <span class="badge" id="atac-seq">&ndash;</span>
+        ATAC-seq
+      </li>
+    </ul>
+  </div>
+
 
   <div class="col-lg-4">
     <ul class="list-group">
@@ -161,12 +190,9 @@
         <span class="badge bx-green" id="pam-location-rel">124</span>
         PAM distance to TSS
       </li>
-      <li class="list-group-item">
-        <span class="badge bx-green" id="pam-19">1/0</span>
-        PAM +1/+9 C
-      </li>
     </ul>
   </div>
+
 
   </div><!--END ROW-->
 </div>
@@ -176,7 +202,7 @@
   <div class="col-lg-10 col-lg-offset-1 well">
       <form>
         <fieldset>
-        <legend>Target by gene</legend>
+        <legend>Search by gene</legend>
         <div class="form-group" id="gene-form-group">
           <label for="gene-search" class="hide">gene</label>
           <input multiple type="search" class="form-control input-lg" id="gene-search" name="gene-search" placeholder="Type gene name or ORF to search">
@@ -188,7 +214,7 @@
 
         <br>
         <fieldset>
-        <legend>Target by sequence</legend>
+        <legend>Search by sequence</legend>
         <div class="form-group" id="seq-form-group">
           <label for="seq-data" class="hide">Some text</label>
           <textarea id="seq-data" class="form-control input-lg" rows="5" placeholder="Enter sequences in FASTA format"></textarea>
@@ -252,32 +278,43 @@
           </th>
 
           <!--5-->
-          <th class="hide" data-dynatable-column="PAM_mid">PAM mid</th>
+          <th data-dynatable-column="PAM_mid_pretty" data-dynatable-sorts="PAM_mid">
+            <abbr data-toggle="tooltip" data-placement="top" title="Midpoint location of the PAM">PAM loc.</abbr>
+          </th>
 
           <!--6-->
           <th class="hide" data-dynatable-column="Target_mid">Target midpoint</th>
+
 
           <!--7-->
           <th class="hide" data-dynatable-column="Midpoint_TSS_dist" >Midpoint TSS dist</th>
 
           <!--8-->
-          <th class="hide" data-dynatable-column="Nucleosome">Nucleosome</th>
-
-          <!--9-->
-          <th class="hide" data-dynatable-column="1C">+1C</th>
-
-          <!--10-->
-          <th class="hide" data-dynatable-column="9C">+9C</th>
-
-          <!--11-->
-          <th class="hide" data-dynatable-column="Length">Guide length</th>
-
-          <!--12-->
-          <th data-dynatable-column="score_viz" data-dynatable-sorts="score">
-            <abbr data-toggle="tooltip" data-placement="top" title="Some score">Score</abbr>
+          <th data-dynatable-column="Nucleosome">
+            <abbr data-toggle="tooltip" data-placement="top" title="Nucleosome occupancy score">Nucl.</abbr>
           </th>
 
+
+          <!--9-->
+          <th data-dynatable-column="Chromatin">
+            <abbr data-toggle="tooltip" data-placement="top" title="Normalized chromatin accessibility">ATAC-seq</abbr>
+          </th>
+
+          <!--10-->
+          <th class="hide" data-dynatable-column="1C">+1C</th>
+
+          <!--11-->
+          <th class="hide" data-dynatable-column="9C">+9C</th>
+
           <!--12-->
+          <th class="hide" data-dynatable-column="Length">Guide length</th>
+
+          <!--13-->
+          <th data-dynatable-column="score_viz" data-dynatable-sorts="score">
+            <abbr data-toggle="tooltip" data-placement="top" title="Quality score">Score</abbr>
+          </th>
+
+
           <th data-dynatable-column="expand_arrow">
           </th>
         </thead>

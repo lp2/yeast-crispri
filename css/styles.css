@@ -213,25 +213,3 @@ i {
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
    font-family: 'Source Sans Pro', sans-serif !important;
 }
-/*
-
-.btn-primary, .btn-primary:hover{
-  background-color: #18bc9c;
-  border-color: #18bc9c;
-}
-
-a, .pagination>li>a, .pagination>li>span, .pagination>li>a:hover, .pagination>li>span:hover{
-  color: #0f7864;
-  text-decoration: none;
-}
-
-a:hover, a:focus{
-  color: #0f7864;
-  text-decoration: none;
-}
-
-.nav-pills>li.active>a, .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
-    color: #ffffff;
-    background-color: #18bc9c;
-    border-color: #18bc9c;
-}*/

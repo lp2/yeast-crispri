@@ -1,6 +1,14 @@
 require(data.table)
 require(rjson)
-setwd('~/Development/colab/leo-crispr-cas9/web/gen_data/')
+setwd('~/Development/colab/yeast-crispri/gen_data/')
+
+# Do TSS
+tss = read.delim2('tss.txt', header=F, stringsAsFactors = F)
+orf2tss = tss$V3
+names(orf2tss) = tss$V1
+
+json = sprintf('orf2tss = %s', toJSON(orf2tss))
+writeLines(json, '../data/orf2tss.json')
 
 dat = as.data.frame( fread('full_features.tab') )
 names(dat)[1] = 'Chrm'

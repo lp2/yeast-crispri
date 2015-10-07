@@ -55,7 +55,7 @@ $(function() {
 		$('.nav-pills li').removeClass('active');
 		$(this).addClass('active');
 
-		document.title = "gRNA design | " + $(this).text();
+		document.title = "Yeast CRISPRi | " + $(this).text();
 
 	});
 	//$('#nav-search a').click();
