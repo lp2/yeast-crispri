@@ -25,7 +25,7 @@ function JSONToCSVConvertor(JSONData,ShowLabel) {
 		 growl.error("Invalid data");
 		 return;
 	}   
-	var fileName = "grna-result";
+	var fileName = "crispri-results";
 	if(msieversion()){
 	var IEwindow = window.open();
 	IEwindow.document.write('sep=,\r\n' + CSV);
@@ -37,7 +37,7 @@ function JSONToCSVConvertor(JSONData,ShowLabel) {
 	 var link = document.createElement("a");    
 	 link.href = uri;
 	 link.style = "visibility:hidden";
-	 link.download = fileName + ".csv";
+	 link.download = fileName + ".tsv";
 	 document.body.appendChild(link);
 	 link.click();
 	 document.body.removeChild(link);
