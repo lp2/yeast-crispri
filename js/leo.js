@@ -211,7 +211,8 @@ updateDynatable = function(records){
     obj.expand_arrow = '<i class="arrow fa fa-angle-right"></i>'
 
     score = 0
-    if(Math.abs(obj['Midpoint_TSS_dist'])  <= 200 ) score += 1
+    tss_dist = obj['Midpoint_TSS_dist']
+    if( tss_dist < 0 && tss_dist >= -200 ) score += 1
     if(obj['Nucleosome'] <= 0.2) score += 1
 
     obj.score = score

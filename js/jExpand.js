@@ -55,7 +55,7 @@
       	// Color boxes accordingly
       	if(nucl > 0.2) 
       		expand_row.find("#nucleosome").removeClass("bx-green").addClass("bx-red");
-      	if(Math.abs(pam_loc_tss) > 200)
+      	if( pam_loc_tss < 0 && pam_loc_tss >= -200 )
       		expand_row.find("#pam-location-rel").removeClass("bx-green").addClass("bx-red");
       });
 
