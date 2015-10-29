@@ -406,6 +406,8 @@ GAAAAGGTAAAAAGTAAAAA");
           delete data[i]['expand_arrow']
           delete data[i]['score_viz']
           delete data[i]['PAM_mid_pretty']
+          delete data[i]['1C']
+          delete data[i]['9C']
         }
 
         if(data == '') return;
