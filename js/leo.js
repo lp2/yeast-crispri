@@ -171,7 +171,7 @@ searchInSequence = function(fastaJson){
 
 // Fetch orf json files, concat the resulting data and update table
 searchInOrfs = function(orfs){
-  console.log(orfs)
+  //console.log(orfs)
   records = [];
   // Process each url
   $.each(orfs, function (i, orf) {
@@ -228,7 +228,7 @@ updateDynatable = function(records){
     obj.score_viz = score_viz
 
     if(i == 0){
-       console.log(obj)
+       //console.log(obj)
        window.obj = obj;
     }
   });
@@ -399,7 +399,7 @@ GAAAAGGTAAAAAGTAAAAA");
     $('#download-table').click(function(){
       console.log("download clicked");
         var data = dynatable.settings.dataset.originalRecords;
-
+        
         for(i = 0; i<data.length; i++){
           delete data[i]['ORF_url']
           delete data[i]['Gene_name_url']
@@ -407,7 +407,6 @@ GAAAAGGTAAAAAGTAAAAA");
           delete data[i]['score_viz']
           delete data[i]['PAM_mid_pretty']
         }
-        console.log(data);
 
         if(data == '') return;
         JSONToCSVConvertor(data, true);
