@@ -64,7 +64,9 @@
       var evt = 0;
       // On click of row
       tr_odd.click(function(e) {
-      	if(e.toElement.tagName == "A") return true;
+        elem = e.toElement
+        if(typeof elem == "undefined") elem = e.currentTarget
+      	if(elem.tagName == "A") return true;
           arr = $(this).find(".arrow");
           $(this).next("tr").toggle("fast", function(){
             arr.toggleClass("spin");
