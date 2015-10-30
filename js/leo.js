@@ -290,6 +290,7 @@ updateDynatable = function(records){
 }
 
 $( document ).ready(function() {
+
       console.log( "ready!" );
       
 
@@ -378,11 +379,11 @@ $( document ).ready(function() {
         
     // });
 
-      $('body').on('paste', '.select2-gene-search', function() {
-  // append a delimiter and trigger an update
-  $(this).val(this.value + ',').trigger('input');
-});
 
+    $('body').on('paste', '#s2id_autogen1', function() {
+      // append a delimiter and trigger an update
+      $(this).val(this.value + ',').trigger('input');
+    });
 
     // Search gene
     $("#gene-search-btn").click(function(){
@@ -427,7 +428,12 @@ $( document ).ready(function() {
 
     // Examples
     gene_example_btn.click(function(){
-      gene_search.val("YAL067C,PHD1,ELO2").change();
+      console.log("ex1 clicked")
+      //gene_search.val("YAL067C,PHD1,ELO2").change();
+      $('#s2id_autogen1').focus();
+      $('#s2id_autogen1').val("YAL067C,PHD1,ELO2" + ',').trigger('input');
+      //gene_search.val("YAL067C,PHD1,ELO2").trigger("change");
+      //gene_search.select2("val", ["YAL067C" ,"PHD1", "ELO2"]);
     });
 
     seq_example_btn.click(function(){
