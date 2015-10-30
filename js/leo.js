@@ -1,4 +1,5 @@
 
+
 var fasta = require('fasta-parser');
 var blank_char = '&ndash;';
 
@@ -9,6 +10,28 @@ waiting = function(x){
     $('body').removeClass('waiting');
   }
 }
+
+commaTokenizer = function(input, selection, callback) {
+        // no comma no need to tokenize
+        if (input.indexOf(',')<0) return;
+        input = input.toUpperCase();
+
+        var parts=input.split(",");
+        for (var i=0;i<parts.length;i++) {
+            var part=parts[i];
+            part=part.trim();
+            // todo: check for dupes (if part is already in [selection])
+
+            // check if the part is valid
+            // todo: you will need a better way of doing this
+            var valid=false;
+            if (part in name2orf || part in orf2index){
+              valid=true
+            }
+
+            if (valid) callback({id:part,text:part});
+        }
+    }
 
 /**********************************
 * ELEMENT DEFINITIONS
@@ -304,8 +327,9 @@ $( document ).ready(function() {
               }
             });
 
-            orfs_and_names = Object.keys(orf2index)
+            window.orfs_and_names = Object.keys(orf2index)
                     .concat( Object.keys(name2orf) )
+
 
             $.each(orfs_and_names, function( i, val ) {
               select2_orfs.push({id:val, text:val});
@@ -314,13 +338,26 @@ $( document ).ready(function() {
             // Populate select2 dropdown
             gene_search.select2({
               data:select2_orfs,
+              //tags:orfs_and_names,
               placeholder: "MYDROPDOWN", 
               multiple: true, 
               maximumSelectionSize: 20, 
-              minimumInputLength: 2
+              minimumInputLength: 2,
+              tokenizer: commaTokenizer,
+              matcher: function (term, text) {
+                  return text.toUpperCase().indexOf(term.toUpperCase()) === 0;
+              },
+              initSelection: function (element, callback) {
+                  var data = [];
+                  $.each(function () {
+                      data.push({id: this, text: this});
+                  });
+                  callback(data);
+              }
             }).on("change", function(e) {
                 // Gene dropdown changed
-                window.gene_selection = $(this).select2("val");
+                //window.gene_selection = $(this).select2("val");
+                window.gene_selection = e.val;
             })
 
       }).done(function() {
@@ -330,6 +367,21 @@ $( document ).ready(function() {
         }).always(function() {
            $("#page-loader").slideUp();
       });
+
+    //   $('body').on('paste', '#s2id_gene-search', function () {
+    //     console.log("pasted!")
+    //     var that = this;
+    //     console.log(this);
+    //     var tokens = that.value.split(/[\,\s]+/);$(that).blur();
+    //     $('#gene-search').val(tokens, true);
+    //     console.log($('#gene-search').select2('val'));
+        
+    // });
+
+      $('body').on('paste', '.select2-gene-search', function() {
+  // append a delimiter and trigger an update
+  $(this).val(this.value + ',').trigger('input');
+});
 
 
     // Search gene
