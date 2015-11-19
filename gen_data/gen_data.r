@@ -2,6 +2,13 @@ require(data.table)
 require(rjson)
 setwd('~/Development/colab/yeast-crispri/gen_data/')
 
+
+dat = as.data.frame( fread('full_features.tab') )
+names(dat)[1] = 'Chrm'
+names(dat)[4] = 'Seq'
+names(dat)[5] = 'Nearest_TSS_ORF'
+
+
 # Do TSS
 tss = read.delim2('tss.txt', header=F, stringsAsFactors = F)
 orf2tss = tss$V3
@@ -10,10 +17,7 @@ names(orf2tss) = tss$V1
 json = sprintf('orf2tss = %s', toJSON(orf2tss))
 writeLines(json, '../data/orf2tss.json')
 
-dat = as.data.frame( fread('full_features.tab') )
-names(dat)[1] = 'Chrm'
-names(dat)[4] = 'Seq'
-names(dat)[5] = 'Nearest_TSS_ORF'
+
 
 dat = dat[,c(1,2,4,5,6,7,8,9,11)]
 
@@ -44,3 +48,23 @@ json = toJSON(orf2name)
 json = sprintf('var orf2name=%s', json)
 writeLines(json, '../data/orf2name.json')
 
+
+
+# All data clean for bulk download!
+dat2 = dat
+dat2$Length = nchar(dat2$Seq)
+dat2$Gene_name = ''
+dat2$ORF = dat2$Nearest_TSS_ORF
+dat2$Chromatin = dat2$Chromatin_rel_1kb
+df = dat2[,c('Chrm', 'PAM_mid', 'Seq', 'Length', 'ORF', 
+            'Gene_name', 'Midpoint_TSS_dist', 'Nucleosome', 'Chromatin')]
+ind = df$ORF %in% names(orf2name)
+df$Gene_name[ind] = orf2name[ df$ORF[ind] ]
+df$Chrm = paste0('chr', as.numeric( as.roman( gsub('chr', '', df$Chrm) ) ))
+
+df$Nucleosome[is.nan(df$Nucleosome)] = -1
+df$score = 0
+score_a = (df$Midpoint_TSS_dist < 0 & df$Midpoint_TSS_dist >= -200)+0
+score_b = (df$Nucleosome != -1 & df$Nucleosome <= 0.2)+0
+df$score = score_a + score_b
+write.table(df, '../data/yeast_crispri_grna_db_191115.tab', quote=F, row.names=F, sep='\t')

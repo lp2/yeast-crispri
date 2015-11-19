@@ -235,8 +235,9 @@ updateDynatable = function(records){
 
     score = 0
     tss_dist = obj['Midpoint_TSS_dist']
+    nucl = obj['Nucleosome']
     if( tss_dist < 0 && tss_dist >= -200 ) score += 1
-    if(obj['Nucleosome'] <= 0.2) score += 1
+    if(nucl <= 0.2 && nucl != -1) score += 1
 
     obj.score = score
 
@@ -359,6 +360,7 @@ $( document ).ready(function() {
                 // Gene dropdown changed
                 //window.gene_selection = $(this).select2("val");
                 window.gene_selection = e.val;
+
             })
 
       }).done(function() {
@@ -387,9 +389,17 @@ $( document ).ready(function() {
 
     // Search gene
     $("#gene-search-btn").click(function(){
+      
       waiting("show");
       // Clear all errors
       clearAllErrors();
+
+      if(gene_selection.length > 50){
+        waiting("hide")
+        gene_form_group.addClass("has-error");
+        $("#too-many-genes").removeClass("hide");
+        return;
+      }
 
       if(gene_selection.length == 0){
           waiting("hide")
@@ -408,8 +418,6 @@ $( document ).ready(function() {
       waiting("show");
       // Clear all errors
       clearAllErrors();
-
-
 
       console.log("search by seq button clicked!")
       fa = getFastaJson()
@@ -430,10 +438,9 @@ $( document ).ready(function() {
     gene_example_btn.click(function(){
       console.log("ex1 clicked")
       //gene_search.val("YAL067C,PHD1,ELO2").change();
+      gene_search.val("").change()//clear it first
       $('#s2id_autogen1').focus();
       $('#s2id_autogen1').val("YAL067C,PHD1,ELO2" + ',').trigger('input');
-      //gene_search.val("YAL067C,PHD1,ELO2").trigger("change");
-      //gene_search.select2("val", ["YAL067C" ,"PHD1", "ELO2"]);
     });
 
     seq_example_btn.click(function(){
@@ -456,11 +463,13 @@ GAAAAGGTAAAAAGTAAAAA");
 
     $('#download-table').click(function(){
       console.log("download clicked");
-        var data = dynatable.settings.dataset.originalRecords;
-        
+        //var data = dynatable.settings.dataset.originalRecords;
+        var data = jQuery.extend(true, [], dynatable.settings.dataset.originalRecords);
+
         for(i = 0; i<data.length; i++){
           delete data[i]['ORF_url']
           delete data[i]['Gene_name_url']
+          delete data[i]['Guide_name']
           delete data[i]['expand_arrow']
           delete data[i]['score_viz']
           delete data[i]['PAM_mid_pretty']
