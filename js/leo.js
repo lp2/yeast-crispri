@@ -308,8 +308,6 @@ $( document ).ready(function() {
             window.data2 = {};
             for(var k in data) data2[k] = [];
 
-            console.log(data2);
-
             $.each(data.Nearest_TSS_ORF, function( i, orfs ) {
 
               orfs = orfs.split(",");
@@ -341,7 +339,7 @@ $( document ).ready(function() {
             });
 
             data = data2;
-            //data2 = null;
+            data2 = null;
             df = data;
 
             // Create sequence to index map
