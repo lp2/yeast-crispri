@@ -304,8 +304,47 @@ $( document ).ready(function() {
       $.getJSON( "./data/dat.json", function(data) {
             // Get large json
             console.log( "success" );
+
+            window.data2 = {};
+            for(var k in data) data2[k] = [];
+
+            console.log(data2);
+
+            $.each(data.Nearest_TSS_ORF, function( i, orfs ) {
+
+              orfs = orfs.split(",");
+              if(orfs.length == 1){
+                for(var k in data2) data2[k].push( data[k][i] );
+              }else{
+                mid = data['Midpoint_TSS_dist'][i]
+                mid = mid.split(",");
+
+                for(var X = 0; X < orfs.length; X++){
+                  for(var k in data2){
+                    if(k == "Midpoint_TSS_dist"){
+                      data2[k].push( mid[X] );
+                    }else if(k == "Nearest_TSS_ORF"){
+                      data2[k].push( orfs[X] );
+                    }else{
+                      data2[k].push( data[k][i] );
+                    }
+
+                  }
+
+                }
+              }
+
+            });
+
+            $.each(data2.Midpoint_TSS_dist, function(i, mid){
+              data2.Midpoint_TSS_dist[i] = parseInt(data2.Midpoint_TSS_dist[i]);
+            });
+
+            data = data2;
+            //data2 = null;
             df = data;
 
+            // Create sequence to index map
             $.each(data.Seq, function( i, val ) {
               if(seq2index.hasOwnProperty(val)){
                 arr = seq2index[val]
@@ -316,10 +355,12 @@ $( document ).ready(function() {
               }
             });
 
+            // Create orf2index
             $.each(data.Nearest_TSS_ORF, function( i, val ) {
               // Skip no orf
               if(val == "") return true;
 
+              //val = val.split(",");
               if(orf2index.hasOwnProperty(val)){
                 arr = orf2index[val]
                 arr.push(i);
