@@ -26,7 +26,7 @@ dat$Chrm = as.integer( as.roman( gsub('chr', '', dat$Chrm) ) )
 dat$Nucleosome[is.nan(dat$Nucleosome)] = -1
 dat$Chromatin_rel_1kb[is.nan(dat$Chromatin_rel_1kb)] = -1
 
-#dat = dat[1:3,]
+#dat = dat[1:5,]
 
 writeLines(toJSON(dat), '../data/dat.json')
 
