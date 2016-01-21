@@ -331,6 +331,7 @@ $( document ).ready(function() {
 
                 }
               }
+              
             });
 
             $.each(data2.Midpoint_TSS_dist, function(i, mid){
